@@ -28,9 +28,9 @@ class StylTTSInference:
         lngsteps(int): Duffision Step
         '''
         if text.strip() == "":
-            return {'status':False,'content':{'sr':0,'data':None},'msg':'Error! Please input some more data'}
+            return {'status':0,'content':{'sr':0,'data':None},'msg':'Error! Please input some more data'}
         if len(text) > 50000:
-            return {'status':False,'content':{'sr':0,'data':None},'msg':'Error! Should be less than 50k characters'}
+            return {'status':0,'content':{'sr':0,'data':None},'msg':'Error! Should be less than 50k characters'}
         texts = txtsplit(text)
         v = voice.lower()
         audios = []
@@ -40,7 +40,7 @@ class StylTTSInference:
             # print(styletts2importable.inference(t, self.voices[v], alpha=0.3, beta=0.7, diffusion_steps=lngsteps, embedding_scale=1))
             audios.append(temp_.tolist())
         data = (24000, audios)
-        return {'status':False,'content':{'sr':data[0],'data':data[1]},'msg':'Success'}
+        return {'status':1,'content':{'sr':data[0],'data':data[1]},'msg':'Success'}
     
     def get_voice_list(self):
         return {'voice_list':self.voicelist}
