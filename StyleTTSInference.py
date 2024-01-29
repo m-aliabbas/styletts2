@@ -6,7 +6,6 @@ from txtsplit import txtsplit
 import numpy as np
 import pickle
 import phonemizer
-import phonemizer
 global_phonemizer = phonemizer.backend.EspeakBackend(language='en-us', preserve_punctuation=True,  with_stress=True)
 
 class StylTTSInference:
@@ -36,8 +35,11 @@ class StylTTSInference:
         v = voice.lower()
         audios = []
         for t in texts:
-            audios.append(styletts2importable.inference(t, self.voices[v], alpha=0.3, beta=0.7, diffusion_steps=lngsteps, embedding_scale=1))
-        data = (24000, np.concatenate(audios))
+            temp_ = styletts2importable.inference(t, self.voices[v], alpha=0.3, beta=0.7, diffusion_steps=lngsteps, embedding_scale=1)
+            # print(type(temp_.tostring()))
+            # print(styletts2importable.inference(t, self.voices[v], alpha=0.3, beta=0.7, diffusion_steps=lngsteps, embedding_scale=1))
+            audios.append(temp_.tolist())
+        data = (24000, audios)
         return {'status':False,'content':{'sr':data[0],'data':data[1]},'msg':'Success'}
     
     def get_voice_list(self):
